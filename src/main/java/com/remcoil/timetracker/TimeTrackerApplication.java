@@ -6,7 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@CrossOrigin(origins= "*", methods = {RequestMethod.GET, RequestMethod.DELETE, RequestMethod.PUT})
 @SpringBootApplication
 public class TimeTrackerApplication {
     @GetMapping("/")
