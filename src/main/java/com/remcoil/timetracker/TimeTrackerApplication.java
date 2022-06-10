@@ -3,8 +3,7 @@ package com.remcoil.timetracker;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @SpringBootApplication
@@ -13,6 +12,12 @@ public class TimeTrackerApplication {
     @ResponseBody
     String home() {
         return "Hello World!";
+    }
+
+    @DeleteMapping("/")
+    @ResponseBody
+    String homeDelete() {
+        return "Resource deleted!";
     }
 
     public static void main(String[] args) {
