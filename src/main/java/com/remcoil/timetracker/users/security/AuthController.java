@@ -26,9 +26,9 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<PublicUser> registerUser(@RequestBody UserData user) {
-        User newUser = authenticationService.registerUser(user.toUser());
-        return ResponseEntity.ok(PublicUser.build(newUser));
+    public ResponseEntity<Jwt> registerUser(@RequestBody UserData user) {
+        Jwt token = authenticationService.registerUser(user.toUser());
+        return ResponseEntity.ok(token);
     }
 
     @GetMapping("/users")

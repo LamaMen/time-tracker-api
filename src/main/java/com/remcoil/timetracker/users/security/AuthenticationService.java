@@ -28,12 +28,15 @@ public class AuthenticationService {
         );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtils.generateJwtToken(authentication);
-        return new Jwt(jwt);
+        User user = (User) authentication.getPrincipal();
+        String token = jwtUtils.generateJwtToken(user);
+        return new Jwt(token);
     }
 
-    public User registerUser(User user) {
-        return userService.save(user);
+    public Jwt registerUser(User user) {
+        User savedUser = userService.save(user);
+        String token = jwtUtils.generateJwtToken(savedUser);
+        return new Jwt(token);
     }
 
     public List<User> getAll() {

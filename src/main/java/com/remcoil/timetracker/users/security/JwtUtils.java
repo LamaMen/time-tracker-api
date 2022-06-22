@@ -1,5 +1,6 @@
 package com.remcoil.timetracker.users.security;
 
+import com.remcoil.timetracker.users.core.User;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,12 +19,14 @@ public class JwtUtils {
     @Value("${app.security.jwtExpirationMs}")
     private int jwtExpirationMs;
 
-    public String generateJwtToken(Authentication authentication) {
-        UserDetails userPrincipal = (UserDetails) authentication.getPrincipal();
+    public String generateJwtToken(User user) {
         Date now = new Date();
 
         return Jwts.builder()
-                .setSubject((userPrincipal.getUsername()))
+                .claim("id", user.getUsername())
+                .claim("name", user.getName())
+                .claim("surname", user.getSurname())
+                .claim("role", user.getRole().name())
                 .setIssuedAt(now)
                 .setExpiration(new Date(now.getTime() + jwtExpirationMs))
                 .signWith(SignatureAlgorithm.HS256, jwtSecret)
@@ -31,7 +34,7 @@ public class JwtUtils {
     }
 
     public String getUserNameFromJwtToken(String token) {
-        return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
+        return (String) Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().get("id");
     }
 
     public boolean validateJwtToken(String authToken) {
