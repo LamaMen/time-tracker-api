@@ -39,13 +39,13 @@ public class UserAdminController {
         return FullUser.build(newUser);
     }
 
-    @PostMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable UUID id, @RequestBody FullUser user, @AuthenticationPrincipal User current) {
-        if (id.equals(current.getId()) && user.getRole() != current.getRole()) {
+    @PutMapping
+    public ResponseEntity<?> update(@RequestBody FullUser user, @AuthenticationPrincipal User current) {
+        if (user.getId().equals(current.getId()) && user.getRole() != current.getRole()) {
             return ResponseEntity.badRequest().body(new MessageResponse("You are trying to change yourself role"));
         }
 
-        User newUser = userService.save(user.toUser(id));
+        User newUser = userService.save(user.toUser());
         return ResponseEntity.ok(FullUser.build(newUser));
     }
 

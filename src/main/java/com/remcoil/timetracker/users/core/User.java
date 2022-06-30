@@ -23,26 +23,6 @@ public class User implements UserDetails {
     String password;
     UserRole role;
 
-    public static @NonNull User fromDB(@NonNull UserTable user) {
-        return new User(
-                user.id,
-                user.name,
-                user.surname,
-                user.password,
-                user.role
-        );
-    }
-
-    public UserTable toDB() {
-        return new UserTable(
-                id,
-                name,
-                surname,
-                password,
-                role
-        );
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();

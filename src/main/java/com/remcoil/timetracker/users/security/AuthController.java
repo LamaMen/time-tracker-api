@@ -1,12 +1,10 @@
 package com.remcoil.timetracker.users.security;
 
-import com.remcoil.timetracker.users.core.User;
-import com.remcoil.timetracker.users.ordinary.PublicUser;
+import com.remcoil.timetracker.users.user.PublicUser;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController

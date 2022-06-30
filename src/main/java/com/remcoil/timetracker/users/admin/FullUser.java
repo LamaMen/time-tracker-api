@@ -1,6 +1,5 @@
 package com.remcoil.timetracker.users.admin;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.remcoil.timetracker.users.core.User;
 import com.remcoil.timetracker.users.core.UserRole;
 import lombok.Getter;
@@ -27,11 +26,6 @@ public class FullUser {
         this.role = role;
     }
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    public UUID getId() {
-        return id;
-    }
-
     public static FullUser build(User user) {
         return new FullUser(
                 user.getId(),
@@ -43,10 +37,6 @@ public class FullUser {
     }
 
     public User toUser() {
-        return toUser(id);
-    }
-
-    public User toUser(UUID id) {
         return new User(id, name, surname, password, role);
     }
 }

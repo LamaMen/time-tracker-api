@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class UserExceptionHandler {
 
     @ExceptionHandler(value = UserNotFoundException.class)
-    public ResponseEntity<MessageResponse> blogNotFoundException(@NonNull UserNotFoundException exception) {
+    public ResponseEntity<MessageResponse> userNotFound(@NonNull UserNotFoundException exception) {
         return ResponseEntity.badRequest().body(new MessageResponse(exception.getMessage()));
     }
 }

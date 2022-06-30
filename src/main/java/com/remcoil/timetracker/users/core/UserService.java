@@ -16,26 +16,21 @@ public class UserService {
     }
 
     public User getById(UUID id) {
-        UserTable user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
-        return User.fromDB(user);
+        UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+        return userEntity.toUser();
     }
 
     public List<User> getAll() {
-        return userRepository
-                .findAll().stream()
-                .map(User::fromDB)
-                .collect(Collectors.toList());
+        return userRepository.findAll().stream().map(UserEntity::toUser).collect(Collectors.toList());
     }
 
     public User save(@NonNull User user) {
-        UserTable savedUser = userRepository.save(user.toDB());
-        return User.fromDB(savedUser);
+        UserEntity userEntity = userRepository.save(new UserEntity(user));
+        return userEntity.toUser();
     }
 
     public void delete(UUID id) {
-        if (!userRepository.existsById(id)) {
-            throw new UserNotFoundException(id);
-        }
+        if (!userRepository.existsById(id)) throw new UserNotFoundException(id);
 
         userRepository.deleteById(id);
     }

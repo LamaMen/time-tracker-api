@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @OpenAPIDefinition(
         info = @Info(
-                version = "0.0.1",
+                version = "0.0.2",
                 title = "Time tracker",
                 description = "System for tracking the time of work on the project for RemCoil employees."
         ),

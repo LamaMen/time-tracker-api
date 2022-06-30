@@ -9,7 +9,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Entity
 @Table(name = "users", schema = "time_tracker")
-public class UserTable {
+public class UserEntity {
     @Id
     @GeneratedValue
     @Type(type = "org.hibernate.type.PostgresUUIDType")
@@ -20,7 +20,19 @@ public class UserTable {
     @Enumerated(EnumType.STRING)
     UserRole role;
 
-    protected UserTable() {
+    protected UserEntity() {
+    }
+
+    public UserEntity(User user) {
+        this.id = user.getId();
+        this.name = user.getName();
+        this.surname = user.getSurname();
+        this.password = user.getPassword();
+        this.role = user.getRole();
+    }
+
+    public User toUser() {
+        return new User(id, name, surname, password, role);
     }
 }
 

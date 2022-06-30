@@ -3,16 +3,22 @@ springdoc:
     path: /swagger-ui.html
 
 spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Europe/Moscow
+
   datasource:
     url: ${JDBC_DATABASE_URL}
     username: ${JDBC_DATABASE_USERNAME}
     password: ${JDBC_DATABASE_PASSWORD}
+
   jpa:
     properties:
       hibernate:
         default_schema: time_tracker
         dialect: org.hibernate.dialect.PostgreSQL81Dialect
     open-in-view: false
+    show-sql: false
 
 app:
   security:
