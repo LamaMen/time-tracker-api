@@ -17,4 +17,9 @@ public class SessionExceptionHandler {
     public ResponseEntity<MessageResponse> sessionAlreadyOpen(@NonNull SessionAlreadyOpenException exception) {
         return ResponseEntity.badRequest().body(new MessageResponse(exception.getMessage()));
     }
+
+    @ExceptionHandler(value = NoOpenedSessionByUserException.class)
+    public ResponseEntity<MessageResponse> sessionAlreadyOpen(@NonNull NoOpenedSessionByUserException exception) {
+        return ResponseEntity.notFound().build();
+    }
 }

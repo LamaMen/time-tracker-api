@@ -47,7 +47,7 @@ public class SessionService {
 
     public OpenedSession getOpened(User user) {
         return sessionRepository.findByUserAndEndTimeIsNull(new UserEntity(user))
-                .map(OpenedSession::new).orElse(null);
+                .map(OpenedSession::new).orElseThrow(() -> new NoOpenedSessionByUserException(user.getId()));
     }
 
     private void stopSession(SessionEntity openedSession) {
