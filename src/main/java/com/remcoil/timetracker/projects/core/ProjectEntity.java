@@ -32,4 +32,23 @@ public class ProjectEntity {
     public void update(Project project) {
         this.name = project.getName();
     }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        ProjectEntity project = (ProjectEntity) o;
+        return id == project.getId();
+    }
 }

@@ -2,7 +2,6 @@ package com.remcoil.timetracker.sessions.user;
 
 
 import com.remcoil.timetracker.core.MessageResponse;
-import com.remcoil.timetracker.sessions.core.Session;
 import com.remcoil.timetracker.sessions.core.SessionService;
 import com.remcoil.timetracker.users.core.User;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 @SecurityRequirement(name = "time-tracker")
 public class SessionUserController {
     private final SessionService sessionService;
-
 
     public SessionUserController(SessionService sessionService) {
         this.sessionService = sessionService;

@@ -1,5 +1,6 @@
 package com.remcoil.timetracker.sessions.core;
 
+import com.remcoil.timetracker.core.DateUtil;
 import com.remcoil.timetracker.projects.core.Project;
 import com.remcoil.timetracker.projects.core.ProjectEntity;
 import com.remcoil.timetracker.users.core.User;
@@ -9,7 +10,6 @@ import lombok.Getter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 
 @AllArgsConstructor
 @Entity
@@ -36,7 +36,7 @@ public class SessionEntity {
     public SessionEntity(Project project, User user) {
         this.user = new UserEntity(user);
         this.project = new ProjectEntity(project);
-        this.startTime = LocalDateTime.now(ZoneId.of("Europe/Moscow"));
+        this.startTime = DateUtil.now();
     }
 
     public Session toSession() {

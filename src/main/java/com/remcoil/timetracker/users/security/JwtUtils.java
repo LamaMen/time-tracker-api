@@ -5,8 +5,6 @@ import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -14,6 +12,7 @@ import java.util.Date;
 @Component
 public class JwtUtils {
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
+    public static final long MS_IN_DAY = 86400000L;
     @Value("${app.security.jwtSecret}")
     private String jwtSecret;
     @Value("${app.security.jwtExpirationMs}")
@@ -28,7 +27,7 @@ public class JwtUtils {
                 .claim("surname", user.getSurname())
                 .claim("role", user.getRole().name())
                 .setIssuedAt(now)
-                .setExpiration(new Date(now.getTime() + jwtExpirationMs))
+                .setExpiration(new Date(now.getTime() + jwtExpirationMs * MS_IN_DAY))
                 .signWith(SignatureAlgorithm.HS256, jwtSecret)
                 .compact();
     }
