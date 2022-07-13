@@ -1,14 +1,19 @@
 package com.remcoil.timetracker.users.core;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.UUID;
 
-@AllArgsConstructor
 @Entity
 @Table(name = "users", schema = "time_tracker")
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserEntity {
     @Id
     @GeneratedValue
@@ -19,9 +24,6 @@ public class UserEntity {
     String password;
     @Enumerated(EnumType.STRING)
     UserRole role;
-
-    protected UserEntity() {
-    }
 
     public UserEntity(User user) {
         this.id = user.getId();

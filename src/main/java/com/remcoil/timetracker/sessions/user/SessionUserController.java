@@ -32,9 +32,4 @@ public class SessionUserController {
 
         return ResponseEntity.ok(new MessageResponse("Tracking stopped"));
     }
-
-    @GetMapping("/opened")
-    public @ResponseBody OpenedSession opened(@AuthenticationPrincipal User user) {
-        return sessionService.getOpened(user);
-    }
 }

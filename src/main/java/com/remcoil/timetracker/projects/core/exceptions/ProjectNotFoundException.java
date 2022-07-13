@@ -1,4 +1,4 @@
-package com.remcoil.timetracker.projects.core;
+package com.remcoil.timetracker.projects.core.exceptions;
 
 public class ProjectNotFoundException extends RuntimeException {
     public ProjectNotFoundException(int id) {

@@ -1,13 +1,11 @@
 package com.remcoil.timetracker.projects.admin;
 
 import com.remcoil.timetracker.core.MessageResponse;
-import com.remcoil.timetracker.projects.core.Project;
-import com.remcoil.timetracker.projects.core.ProjectService;
+import com.remcoil.timetracker.projects.core.domain.Project;
+import com.remcoil.timetracker.projects.core.domain.ProjectService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController()
 @RequestMapping("/api/v1/admin/projects")

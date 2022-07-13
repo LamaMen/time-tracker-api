@@ -1,4 +1,4 @@
-package com.remcoil.timetracker.projects.core;
+package com.remcoil.timetracker.projects.core.data;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

@@ -31,6 +31,6 @@ public class AuthController {
 
     @GetMapping("/users")
     public @ResponseBody List<PublicUser> getAll() {
-        return authenticationService.getAll().stream().map(PublicUser::build).collect(Collectors.toList());
+        return authenticationService.getAll().stream().map(PublicUser::new).collect(Collectors.toList());
     }
 }

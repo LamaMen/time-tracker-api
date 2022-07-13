@@ -1,8 +1,7 @@
-package com.remcoil.timetracker.projects.user;
+package com.remcoil.timetracker.progress.core;
 
 import com.remcoil.timetracker.core.DateUtil;
-import com.remcoil.timetracker.projects.core.ProjectDuration;
-import com.remcoil.timetracker.sessions.core.SessionEntity;
+import com.remcoil.timetracker.sessions.core.Session;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -16,14 +15,14 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collector;
 
-public class ProjectDurationCollector implements Collector<SessionEntity, List<Duration>, ProjectDuration> {
+public class ProjectDurationCollector implements Collector<Session, List<Duration>, ProjectDuration> {
     @Override
     public Supplier<List<Duration>> supplier() {
         return ArrayList::new;
     }
 
     @Override
-    public BiConsumer<List<Duration>, SessionEntity> accumulator() {
+    public BiConsumer<List<Duration>, Session> accumulator() {
         return (d, s) -> {
             LocalDateTime end = s.getEndTime() != null ? s.getEndTime() : DateUtil.now();
             Duration sessionDuration = Duration.between(s.getStartTime(), end);

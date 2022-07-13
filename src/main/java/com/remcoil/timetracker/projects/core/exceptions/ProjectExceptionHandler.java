@@ -1,4 +1,4 @@
-package com.remcoil.timetracker.projects.core;
+package com.remcoil.timetracker.projects.core.exceptions;
 
 
 import com.remcoil.timetracker.core.MessageResponse;

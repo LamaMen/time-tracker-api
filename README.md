@@ -6,3 +6,6 @@ TimeTracker supports the Swagger specification. It is located:
 ```html 
 /swagger-ui/index.html
 ```
+
+### На будущее
+- [ ] Должна поддерживаться возможность получения статистика за переуд а не за фиксированный месяц.

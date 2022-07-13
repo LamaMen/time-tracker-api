@@ -1,20 +1,20 @@
 package com.remcoil.timetracker.sessions.core;
 
 import com.remcoil.timetracker.core.DateUtil;
-import com.remcoil.timetracker.projects.core.Project;
-import com.remcoil.timetracker.projects.core.ProjectEntity;
+import com.remcoil.timetracker.projects.core.data.ProjectEntity;
 import com.remcoil.timetracker.users.core.User;
 import com.remcoil.timetracker.users.core.UserEntity;
-import lombok.AllArgsConstructor;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@AllArgsConstructor
 @Entity
-@Getter
 @Table(name = "sessions", schema = "time_tracker")
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SessionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,12 +30,9 @@ public class SessionEntity {
     @Column(name = "end_date")
     LocalDateTime endTime;
 
-    protected SessionEntity() {
-    }
-
-    public SessionEntity(Project project, User user) {
+    public SessionEntity(int projectId, User user) {
         this.user = new UserEntity(user);
-        this.project = new ProjectEntity(project);
+        this.project = new ProjectEntity(projectId);
         this.startTime = DateUtil.now();
     }
 

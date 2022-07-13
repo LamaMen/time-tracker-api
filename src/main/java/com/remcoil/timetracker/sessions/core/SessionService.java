@@ -1,14 +1,15 @@
 package com.remcoil.timetracker.sessions.core;
 
-import com.remcoil.timetracker.projects.core.Project;
-import com.remcoil.timetracker.sessions.user.OpenedSession;
 import com.remcoil.timetracker.users.core.User;
 import com.remcoil.timetracker.users.core.UserEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class SessionService {
@@ -16,6 +17,19 @@ public class SessionService {
 
     public SessionService(SessionRepository sessionRepository) {
         this.sessionRepository = sessionRepository;
+    }
+
+    public Session getOpened(User user) {
+        return sessionRepository.findByUserAndEndTimeIsNull(new UserEntity(user))
+                .map(SessionEntity::toSession).orElseThrow(() -> new NoOpenedSessionByUserException(user.getId()));
+    }
+
+    public List<Session> getByPeriod(UUID userId, LocalDateTime start, LocalDateTime end) {
+        List<SessionEntity> sessionEntities = userId != null ?
+                sessionRepository.getByPeriodAndUser(userId, start, end)
+                : sessionRepository.getByPeriod(start, end);
+
+        return sessionEntities.stream().map(SessionEntity::toSession).collect(Collectors.toList());
     }
 
     public void startWork(int projectId, User user) {
@@ -29,7 +43,7 @@ public class SessionService {
             stopSession(sessionEntity);
         }
 
-        SessionEntity session = new SessionEntity(new Project(projectId), user);
+        SessionEntity session = new SessionEntity(projectId, user);
         sessionRepository.save(session);
     }
 
@@ -43,11 +57,6 @@ public class SessionService {
 
             stopSession(sessionEntity);
         }
-    }
-
-    public OpenedSession getOpened(User user) {
-        return sessionRepository.findByUserAndEndTimeIsNull(new UserEntity(user))
-                .map(OpenedSession::new).orElseThrow(() -> new NoOpenedSessionByUserException(user.getId()));
     }
 
     private void stopSession(SessionEntity openedSession) {

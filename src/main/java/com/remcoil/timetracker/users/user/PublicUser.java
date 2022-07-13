@@ -14,19 +14,10 @@ public class PublicUser {
     private final String surname;
     private final UserRole role;
 
-    private PublicUser(UUID id, String name, String surname, UserRole role) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.role = role;
-    }
-
-    public static @NonNull PublicUser build(@NonNull User user) {
-        return new PublicUser(
-                user.getId(),
-                user.getName(),
-                user.getSurname(),
-                user.getRole()
-        );
+    public PublicUser(@NonNull User user) {
+        id = user.getId();
+        name = user.getName();
+        surname = user.getSurname();
+        role = user.getRole();
     }
 }

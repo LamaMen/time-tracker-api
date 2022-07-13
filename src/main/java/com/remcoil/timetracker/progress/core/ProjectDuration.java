@@ -1,6 +1,5 @@
-package com.remcoil.timetracker.projects.core;
+package com.remcoil.timetracker.progress.core;
 
-import com.remcoil.timetracker.projects.user.ProjectWithDuration;
 import lombok.Getter;
 
 import java.time.Duration;
