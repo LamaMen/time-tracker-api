@@ -25,18 +25,19 @@ public class UserAdminController {
     @GetMapping
     public @ResponseBody List<FullUser> getAll() {
         List<User> users = userService.getAll();
-        return users.stream().map(FullUser::build).collect(Collectors.toList());
+        return users.stream().map(FullUser::new).collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
     public @ResponseBody FullUser getById(@PathVariable UUID id) {
-        return FullUser.build(userService.getById(id));
+        User user = userService.getById(id);
+        return new FullUser(user);
     }
 
     @PostMapping
     public @ResponseBody FullUser add(@RequestBody FullUser user) {
         User newUser = userService.save(user.toUser());
-        return FullUser.build(newUser);
+        return new FullUser(newUser);
     }
 
     @PutMapping
@@ -46,7 +47,7 @@ public class UserAdminController {
         }
 
         User newUser = userService.save(user.toUser());
-        return ResponseEntity.ok(FullUser.build(newUser));
+        return ResponseEntity.ok(new FullUser(newUser));
     }
 
 

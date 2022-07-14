@@ -1,13 +1,13 @@
 package com.remcoil.timetracker.projects.core.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.*;
 
 @Getter
+@Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(of = {"id"})
 public class Project {
-    private final int id;
-    private final String name;
+    private int id;
+    private String name;
 }

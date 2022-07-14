@@ -16,14 +16,14 @@ public class AuthController {
         this.authenticationService = authenticationService;
     }
 
-    @PostMapping("/signin")
+    @PostMapping("/sign-in")
     @ResponseBody
     public ResponseEntity<Jwt> authenticateUser(@RequestBody UserCredentials credentials) {
         Jwt jwt = authenticationService.authenticateUser(credentials.getId(), credentials.getPassword());
         return ResponseEntity.ok(jwt);
     }
 
-    @PostMapping("/signup")
+    @PostMapping("/sign-up")
     public ResponseEntity<Jwt> registerUser(@RequestBody UserData user) {
         Jwt token = authenticationService.registerUser(user.toUser());
         return ResponseEntity.ok(token);

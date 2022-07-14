@@ -8,9 +8,10 @@ import lombok.Setter;
 
 import java.util.UUID;
 
-@NoArgsConstructor
 @Getter
 @Setter
+@NoArgsConstructor
+
 public class FullUser {
     private UUID id;
     private String name;
@@ -18,22 +19,12 @@ public class FullUser {
     private String password;
     private UserRole role;
 
-    private FullUser(UUID id, String name, String surname, String password, UserRole role) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.password = password;
-        this.role = role;
-    }
-
-    public static FullUser build(User user) {
-        return new FullUser(
-                user.getId(),
-                user.getName(),
-                user.getSurname(),
-                user.getPassword(),
-                user.getRole()
-        );
+    public FullUser(User user) {
+        this.id = user.getId();
+        this.name = user.getName();
+        this.surname = user.getSurname();
+        this.password = user.getPassword();
+        this.role = user.getRole();
     }
 
     public User toUser() {
