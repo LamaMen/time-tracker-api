@@ -40,7 +40,7 @@ public class ProjectService {
 
     public Project update(Project project) {
         ProjectEntity projectEntity = findById(project.getId());
-        projectEntity.updateName(project.getName());
+        projectEntity.updateFields(project);
         return projectRepository.save(projectEntity).toProject();
     }
 

@@ -31,11 +31,12 @@ public class ProjectEntity {
     }
 
     public Project toProject() {
-        return new Project(this.id, this.name);
+        return new Project(this.id, this.name, isArchive);
     }
 
-    public void updateName(String name) {
-        this.name = name;
+    public void updateFields(Project project) {
+        this.name = project.getName();
+        this.isArchive = project.isArchive();
     }
 
     public void archive() {

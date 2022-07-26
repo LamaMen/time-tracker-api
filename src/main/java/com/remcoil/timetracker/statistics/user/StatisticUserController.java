@@ -6,10 +6,7 @@ import com.remcoil.timetracker.statistics.core.UserStatistic;
 import com.remcoil.timetracker.users.core.User;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,12 +21,16 @@ public class StatisticUserController {
     }
 
     @GetMapping
-    public @ResponseBody UserStatistic ownStatistics(@AuthenticationPrincipal User user) {
-        return statisticsService.getStatisticByUser(user.getId(), false);
+    public @ResponseBody UserStatistic ownStatistics(
+            @AuthenticationPrincipal User user, @RequestParam(defaultValue = "false") boolean isFull
+    ) {
+        return statisticsService.getStatisticByUser(user.getId(), isFull);
     }
 
     @GetMapping("/general")
-    public @ResponseBody List<ProjectProgress> generalStatistic() {
-        return statisticsService.getGeneralStatistic(false);
+    public @ResponseBody List<ProjectProgress> generalStatistic(
+            @RequestParam(defaultValue = "false") boolean isFull
+    ) {
+        return statisticsService.getGeneralStatistic(isFull);
     }
 }

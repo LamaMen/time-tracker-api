@@ -18,7 +18,9 @@ public class StatisticAdminController {
     }
 
     @GetMapping("/{id}")
-    public @ResponseBody UserStatistic getUserStatistics(@PathVariable UUID id) {
-        return statisticsService.getStatisticByUser(id, false);
+    public @ResponseBody UserStatistic getUserStatistics(
+            @PathVariable UUID id, @RequestParam(defaultValue = "false") boolean isFull
+    ) {
+        return statisticsService.getStatisticByUser(id, isFull);
     }
 }

@@ -9,13 +9,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class ProjectExceptionHandler {
-    @ExceptionHandler(value = ProjectNotFoundException.class)
-    public ResponseEntity<MessageResponse> projectNotFound(@NonNull ProjectNotFoundException exception) {
-        return ResponseEntity.badRequest().body(new MessageResponse(exception.getMessage()));
-    }
-
-    @ExceptionHandler(value = ProjectAlreadyArchivedException.class)
-    public ResponseEntity<MessageResponse> projectAlreadyArchived(@NonNull ProjectAlreadyArchivedException exception) {
+    @ExceptionHandler(value = {
+            ProjectNotFoundException.class,
+            ProjectAlreadyArchivedException.class,
+    })
+    public ResponseEntity<MessageResponse> projectNotFound(@NonNull RuntimeException exception) {
         return ResponseEntity.badRequest().body(new MessageResponse(exception.getMessage()));
     }
 }

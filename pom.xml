@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.remcoil</groupId>
     <artifactId>time-tracker</artifactId>
-    <version>0.0.3</version>
+    <version>0.0.4</version>
     <name>time-tracker</name>
     <description>time-tracker</description>
     <properties>
