@@ -1,13 +1,12 @@
-package com.remcoil.timetracker.progress.core;
+package com.remcoil.timetracker.progress.core.models;
 
 import com.remcoil.timetracker.core.DateUtil;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
 
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
 @Getter
 public class ProgressPeriod {
     private final LocalDateTime start;

@@ -1,6 +1,6 @@
 package com.remcoil.timetracker.users.security;
 
-import com.remcoil.timetracker.users.core.User;
+import com.remcoil.timetracker.users.core.domain.User;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

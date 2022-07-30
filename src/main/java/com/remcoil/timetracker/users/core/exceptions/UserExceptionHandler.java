@@ -1,4 +1,4 @@
-package com.remcoil.timetracker.users.core;
+package com.remcoil.timetracker.users.core.exceptions;
 
 import com.remcoil.timetracker.core.MessageResponse;
 import org.springframework.http.ResponseEntity;

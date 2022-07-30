@@ -18,17 +18,22 @@ public class ProjectAdminController {
     }
 
     @PostMapping
-    public @ResponseBody Project add(@RequestBody Project project) {
+    @ResponseBody
+    public Project add(@RequestBody Project project) {
         return projectService.save(project);
     }
 
     @PutMapping
+    @ResponseBody
     public Project update(@RequestBody Project project) {
         return projectService.update(project);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<MessageResponse> delete(@PathVariable int id, @RequestParam(defaultValue = "true") boolean isArchive) {
+    public ResponseEntity<MessageResponse> delete(
+            @PathVariable int id,
+            @RequestParam(defaultValue = "true") boolean isArchive
+    ) {
         if (isArchive) {
             projectService.archiveProject(id);
             return ResponseEntity.ok(new MessageResponse("Project archived"));

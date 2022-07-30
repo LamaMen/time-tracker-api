@@ -1,4 +1,4 @@
-package com.remcoil.timetracker.users.core;
+package com.remcoil.timetracker.users.core.exceptions;
 
 import java.util.UUID;
 

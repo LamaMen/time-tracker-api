@@ -1,6 +1,6 @@
-package com.remcoil.timetracker.sessions.core;
+package com.remcoil.timetracker.sessions.core.data;
 
-import com.remcoil.timetracker.users.core.UserEntity;
+import com.remcoil.timetracker.users.core.data.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

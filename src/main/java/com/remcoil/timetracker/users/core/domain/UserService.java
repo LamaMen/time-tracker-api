@@ -1,5 +1,8 @@
-package com.remcoil.timetracker.users.core;
+package com.remcoil.timetracker.users.core.domain;
 
+import com.remcoil.timetracker.users.core.data.UserEntity;
+import com.remcoil.timetracker.users.core.data.UserRepository;
+import com.remcoil.timetracker.users.core.exceptions.UserNotFoundException;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +18,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User getById(UUID id) {
+    public User getById(@NonNull UUID id) {
         UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
         return userEntity.toUser();
     }
@@ -29,7 +32,7 @@ public class UserService {
         return userEntity.toUser();
     }
 
-    public void delete(UUID id) {
+    public void delete(@NonNull UUID id) {
         if (!userRepository.existsById(id)) throw new UserNotFoundException(id);
 
         userRepository.deleteById(id);

@@ -1,7 +1,8 @@
 package com.remcoil.timetracker.progress.core;
 
 import com.remcoil.timetracker.core.DateUtil;
-import com.remcoil.timetracker.sessions.core.Session;
+import com.remcoil.timetracker.progress.core.models.ProjectDuration;
+import com.remcoil.timetracker.sessions.core.domain.Session;
 
 import java.time.Duration;
 import java.time.LocalDateTime;

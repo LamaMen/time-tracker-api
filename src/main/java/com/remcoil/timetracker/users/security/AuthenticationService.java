@@ -1,7 +1,7 @@
 package com.remcoil.timetracker.users.security;
 
-import com.remcoil.timetracker.users.core.User;
-import com.remcoil.timetracker.users.core.UserService;
+import com.remcoil.timetracker.users.core.domain.User;
+import com.remcoil.timetracker.users.core.domain.UserService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

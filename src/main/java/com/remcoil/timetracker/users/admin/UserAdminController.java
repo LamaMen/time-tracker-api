@@ -1,8 +1,8 @@
 package com.remcoil.timetracker.users.admin;
 
 import com.remcoil.timetracker.core.MessageResponse;
-import com.remcoil.timetracker.users.core.User;
-import com.remcoil.timetracker.users.core.UserService;
+import com.remcoil.timetracker.users.core.domain.User;
+import com.remcoil.timetracker.users.core.domain.UserService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

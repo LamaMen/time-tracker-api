@@ -1,4 +1,4 @@
-package com.remcoil.timetracker.progress.core;
+package com.remcoil.timetracker.progress.core.models;
 
 import lombok.Getter;
 
@@ -8,11 +8,6 @@ import java.time.Duration;
 public class ProjectDuration {
     private final Integer hours;
     private final Integer minutes;
-
-    public ProjectDuration() {
-        this.hours = 0;
-        this.minutes = 0;
-    }
 
     public ProjectDuration(Duration duration) {
         int hours = (int) duration.toHours();

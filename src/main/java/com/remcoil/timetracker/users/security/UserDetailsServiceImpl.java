@@ -1,7 +1,7 @@
 package com.remcoil.timetracker.users.security;
 
-import com.remcoil.timetracker.users.core.UserNotFoundException;
-import com.remcoil.timetracker.users.core.UserService;
+import com.remcoil.timetracker.users.core.exceptions.UserNotFoundException;
+import com.remcoil.timetracker.users.core.domain.UserService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

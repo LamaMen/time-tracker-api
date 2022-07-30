@@ -1,5 +1,6 @@
-package com.remcoil.timetracker.users.core;
+package com.remcoil.timetracker.users.core.data;
 
+import com.remcoil.timetracker.users.core.domain.User;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,6 +32,10 @@ public class UserEntity {
         this.surname = user.getSurname();
         this.password = user.getPassword();
         this.role = user.getRole();
+    }
+
+    public UserEntity(UUID id) {
+        this.id = id;
     }
 
     public User toUser() {

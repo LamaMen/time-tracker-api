@@ -1,5 +1,6 @@
-package com.remcoil.timetracker.users.core;
+package com.remcoil.timetracker.users.core.domain;
 
+import com.remcoil.timetracker.users.core.data.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

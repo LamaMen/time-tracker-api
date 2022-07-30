@@ -1,4 +1,4 @@
-package com.remcoil.timetracker.users.core;
+package com.remcoil.timetracker.users.core.data;
 
 public enum UserRole {
     Employee,

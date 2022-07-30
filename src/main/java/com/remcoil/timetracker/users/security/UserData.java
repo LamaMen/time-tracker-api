@@ -1,7 +1,7 @@
 package com.remcoil.timetracker.users.security;
 
-import com.remcoil.timetracker.users.core.User;
-import com.remcoil.timetracker.users.core.UserRole;
+import com.remcoil.timetracker.users.core.domain.User;
+import com.remcoil.timetracker.users.core.data.UserRole;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

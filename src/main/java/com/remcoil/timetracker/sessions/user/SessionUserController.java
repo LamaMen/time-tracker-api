@@ -2,8 +2,8 @@ package com.remcoil.timetracker.sessions.user;
 
 
 import com.remcoil.timetracker.core.MessageResponse;
-import com.remcoil.timetracker.sessions.core.SessionService;
-import com.remcoil.timetracker.users.core.User;
+import com.remcoil.timetracker.sessions.core.domain.SessionService;
+import com.remcoil.timetracker.users.core.domain.User;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,14 +21,14 @@ public class SessionUserController {
 
     @GetMapping("/start/{projectId}")
     public ResponseEntity<MessageResponse> start(@PathVariable int projectId, @AuthenticationPrincipal User user) {
-        sessionService.startWork(projectId, user);
+        sessionService.startWork(projectId, user.getId());
 
         return ResponseEntity.ok(new MessageResponse("Tracking started"));
     }
 
     @GetMapping("/stop/{projectId}")
     public ResponseEntity<MessageResponse> stop(@PathVariable int projectId, @AuthenticationPrincipal User user) {
-        sessionService.stopWork(projectId, user);
+        sessionService.stopWork(projectId, user.getId());
 
         return ResponseEntity.ok(new MessageResponse("Tracking stopped"));
     }

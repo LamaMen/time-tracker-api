@@ -1,7 +1,7 @@
 package com.remcoil.timetracker.users.user;
 
-import com.remcoil.timetracker.users.core.User;
-import com.remcoil.timetracker.users.core.UserRole;
+import com.remcoil.timetracker.users.core.domain.User;
+import com.remcoil.timetracker.users.core.data.UserRole;
 import lombok.Getter;
 import org.springframework.lang.NonNull;
 
