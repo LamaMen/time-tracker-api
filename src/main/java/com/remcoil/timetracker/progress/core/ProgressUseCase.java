@@ -1,17 +1,19 @@
 package com.remcoil.timetracker.progress.core;
 
-import com.remcoil.timetracker.core.DateUtil;
 import com.remcoil.timetracker.progress.core.models.Progress;
 import com.remcoil.timetracker.progress.core.models.ProgressPeriod;
 import com.remcoil.timetracker.progress.core.models.ProjectDuration;
 import com.remcoil.timetracker.projects.core.domain.Project;
 import com.remcoil.timetracker.sessions.core.domain.Session;
 import com.remcoil.timetracker.sessions.core.domain.SessionService;
+import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Component
@@ -22,33 +24,22 @@ public class ProgressUseCase {
         this.sessionService = sessionService;
     }
 
-    public List<Progress> getTodayProgress(UUID userId) {
-        return getProgressByPeriod(userId, ProgressPeriod.day());
-    }
-
-    public List<Progress> getGeneralProgressByMonth() {
-        return getProgressByPeriod(null, ProgressPeriod.month());
-    }
-
-    private List<Progress> getProgressByPeriod(@Nullable UUID userId, ProgressPeriod period) {
+    public List<Progress> getProgressByPeriod(@Nullable UUID userId, @NonNull ProgressPeriod period) {
         List<Session> sessions = sessionService.getByPeriod(userId, period.getStart(), period.getEnd());
         Map<Project, ProjectDuration> durations = calculateDiff(sessions);
         return mapDurationsToProgress(durations);
     }
 
-    public Map<LocalDate, List<Progress>> getMonthProgress(UUID userId) {
-        List<Session> sessions = sessionService.getByPeriod(userId, DateUtil.startMonth(), DateUtil.endMonth());
+    public Map<LocalDate, List<Progress>> getProgressByDays(@NonNull UUID userId, @NonNull ProgressPeriod period) {
+        List<Session> sessions = sessionService.getByPeriod(userId, period.getStart(), period.getEnd());
         Map<LocalDate, List<Session>> groupedSessions = sessions.stream().collect(Collectors.groupingBy((s) -> s.getStartTime().toLocalDate()));
 
-        Map<LocalDate, List<Progress>> progress = new HashMap<>();
-
-        groupedSessions.forEach((d, s) -> {
-            Map<Project, ProjectDuration> durations = calculateDiff(s);
-            List<Progress> p = mapDurationsToProgress(durations);
-            progress.put(d, p);
-        });
-
-        return progress;
+        return groupedSessions.entrySet()
+                .stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, s -> {
+                    Map<Project, ProjectDuration> durations = calculateDiff(s.getValue());
+                    return mapDurationsToProgress(durations);
+                }));
     }
 
     private List<Progress> mapDurationsToProgress(Map<Project, ProjectDuration> durations) {

@@ -2,9 +2,11 @@ package com.remcoil.timetracker.progress.core;
 
 import com.remcoil.timetracker.progress.core.models.DailyProgress;
 import com.remcoil.timetracker.progress.core.models.Progress;
+import com.remcoil.timetracker.progress.core.models.ProgressPeriod;
 import com.remcoil.timetracker.sessions.core.domain.Session;
 import com.remcoil.timetracker.sessions.core.domain.SessionService;
 import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -24,7 +26,8 @@ public class ProgressService {
     }
 
     public List<DailyProgress> getTodayProgress(@NonNull UUID userId) {
-        List<Progress> progresses = progressUseCase.getTodayProgress(userId);
+        List<Progress> progresses = progressUseCase.getProgressByPeriod(userId, ProgressPeriod.day());
+
         Session opened = sessionService.getOpened(userId);
         return progresses.stream().map(p -> {
             int inWork = opened.getProject().getId();
@@ -32,11 +35,21 @@ public class ProgressService {
         }).collect(Collectors.toList());
     }
 
-    public Map<LocalDate, List<Progress>> getProgressByUser(UUID userId) {
-        return progressUseCase.getMonthProgress(userId);
+    public Map<LocalDate, List<Progress>> getProgressByUser(
+            @NonNull UUID userId,
+            @Nullable LocalDate start,
+            @Nullable LocalDate end
+    ) {
+        ProgressPeriod period = ProgressPeriod.orDefault(start, end);
+        return progressUseCase.getProgressByDays(userId, period);
     }
 
-    public List<Progress> getGeneralProgress() {
-        return progressUseCase.getGeneralProgressByMonth();
+    public List<Progress> getGeneralProgress(
+            @Nullable UUID userId,
+            @Nullable LocalDate start,
+            @Nullable LocalDate end
+    ) {
+        ProgressPeriod period = ProgressPeriod.orDefault(start, end);
+        return progressUseCase.getProgressByPeriod(userId, period);
     }
 }

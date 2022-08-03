@@ -3,10 +3,6 @@ springdoc:
     path: /swagger-ui.html
 
 spring:
-  jackson:
-    date-format: yyyy-MM-dd HH:mm:ss
-    time-zone: Europe/Moscow
-
   datasource:
     url: ${JDBC_DATABASE_URL}
     username: ${JDBC_DATABASE_USERNAME}

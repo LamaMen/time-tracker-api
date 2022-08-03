@@ -13,8 +13,8 @@ import org.springframework.context.annotation.Configuration;
                 description = "System for tracking the time of work on the project for RemCoil employees."
         ),
         servers = {
+                @Server(url = "http://localhost:8080", description = "Test server"),
                 @Server(url = "https://time-tracker-develop.herokuapp.com", description = "Dev server"),
-                @Server(url = "http://localhost:8080", description = "Test server")
         }
 )
 public class SwaggerConfig {

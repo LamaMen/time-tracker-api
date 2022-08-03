@@ -24,14 +24,11 @@ public class SessionService {
     }
 
     public Session getOpened(UUID userId) {
-        return sessionRepository.findByUserAndEndTimeIsNull(new UserEntity(userId))
-                .map(SessionEntity::toSession).orElse(Session.notOpened());
+        return sessionRepository.findByUserAndEndTimeIsNull(new UserEntity(userId)).map(SessionEntity::toSession).orElse(Session.notOpened());
     }
 
     public List<Session> getByPeriod(@Nullable UUID userId, LocalDateTime start, LocalDateTime end) {
-        List<SessionEntity> sessionEntities = userId != null ?
-                sessionRepository.getByPeriodAndUser(userId, start, end)
-                : sessionRepository.getByPeriod(start, end);
+        List<SessionEntity> sessionEntities = userId != null ? sessionRepository.getByPeriodAndUser(userId, start, end) : sessionRepository.getByPeriod(start, end);
 
         return sessionEntities.stream().map(SessionEntity::toSession).collect(Collectors.toList());
     }
@@ -55,16 +52,13 @@ public class SessionService {
 
     public void stopWork(int projectId, UUID userId) {
         UserEntity user = new UserEntity(userId);
-        Optional<SessionEntity> openedSession = sessionRepository.findByUserAndEndTimeIsNull(user);
-        if (openedSession.isPresent()) {
-            SessionEntity sessionEntity = openedSession.get();
+        SessionEntity session = sessionRepository.findByUserAndEndTimeIsNull(user).orElseThrow(() -> new NoOpenedSessionInProjectException(projectId, user.getId()));
 
-            if (sessionEntity.getProject().getId() != projectId) {
-                throw new NoOpenedSessionInProjectException(projectId, user.getId());
-            }
-
-            stopSession(sessionEntity);
+        if (session.getProject().getId() != projectId) {
+            throw new NoOpenedSessionInProjectException(projectId, user.getId());
         }
+
+        stopSession(session);
     }
 
     private void stopSession(SessionEntity openedSession) {

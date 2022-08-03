@@ -5,6 +5,7 @@ import com.remcoil.timetracker.progress.core.ProgressService;
 import com.remcoil.timetracker.progress.core.models.Progress;
 import com.remcoil.timetracker.users.core.domain.User;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,15 +30,21 @@ public class ProgressUserController {
         return progressService.getTodayProgress(user.getId());
     }
 
-    @GetMapping("/own")
-    public @ResponseBody Map<LocalDate, List<Progress>> ownProgress(
-            @AuthenticationPrincipal User user
+    @GetMapping()
+    public @ResponseBody Map<LocalDate, List<Progress>> getSelfProgress(
+            @AuthenticationPrincipal User user,
+            @RequestParam(value = "start", required = false) @DateTimeFormat(pattern = "d.MM.yyyy") LocalDate start,
+            @RequestParam(value = "end", required = false) @DateTimeFormat(pattern = "d.MM.yyyy") LocalDate end
     ) {
-        return progressService.getProgressByUser(user.getId());
+        return progressService.getProgressByUser(user.getId(), start, end);
     }
 
     @GetMapping("/general")
-    public @ResponseBody List<Progress> generalProgress() {
-        return progressService.getGeneralProgress();
+    public @ResponseBody List<Progress> getGeneralProgress(
+            @AuthenticationPrincipal User user,
+            @RequestParam(value = "start", required = false) @DateTimeFormat(pattern = "d.MM.yyyy") LocalDate start,
+            @RequestParam(value = "end", required = false) @DateTimeFormat(pattern = "d.MM.yyyy") LocalDate end
+    ) {
+        return progressService.getGeneralProgress(user.getId(), start, end);
     }
 }

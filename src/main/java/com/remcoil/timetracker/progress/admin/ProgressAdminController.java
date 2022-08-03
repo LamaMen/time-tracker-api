@@ -3,6 +3,7 @@ package com.remcoil.timetracker.progress.admin;
 import com.remcoil.timetracker.progress.core.ProgressService;
 import com.remcoil.timetracker.progress.core.models.Progress;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -21,7 +22,19 @@ public class ProgressAdminController {
     }
 
     @GetMapping("/{id}")
-    public @ResponseBody Map<LocalDate, List<Progress>> getUserProgress(@PathVariable UUID id) {
-        return progressService.getProgressByUser(id);
+    public @ResponseBody Map<LocalDate, List<Progress>> getUserProgress(
+            @PathVariable UUID id,
+            @RequestParam(value = "start", required = false) @DateTimeFormat(pattern = "d.MM.yyyy") LocalDate start,
+            @RequestParam(value = "end", required = false) @DateTimeFormat(pattern = "d.MM.yyyy") LocalDate end
+    ) {
+        return progressService.getProgressByUser(id, start, end);
+    }
+
+    @GetMapping("/general")
+    public @ResponseBody List<Progress> getGeneralProgress(
+            @RequestParam(value = "start", required = false) @DateTimeFormat(pattern = "d.MM.yyyy") LocalDate start,
+            @RequestParam(value = "end", required = false) @DateTimeFormat(pattern = "d.MM.yyyy") LocalDate end
+    ) {
+        return progressService.getGeneralProgress(null, start, end);
     }
 }

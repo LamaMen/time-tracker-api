@@ -1,21 +1,45 @@
 package com.remcoil.timetracker.progress.core.models;
 
 import com.remcoil.timetracker.core.DateUtil;
-import lombok.AllArgsConstructor;
+import com.remcoil.timetracker.progress.core.exceptions.BothEndsMustBePassedException;
+import com.remcoil.timetracker.progress.core.exceptions.StartDateAfterEndException;
 import lombok.Getter;
+import org.springframework.lang.Nullable;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@AllArgsConstructor
-@Getter
 public class ProgressPeriod {
-    private final LocalDateTime start;
-    private final LocalDateTime end;
+    private final LocalDate start;
+    private final LocalDate end;
+
+    public ProgressPeriod(LocalDate start, LocalDate end) {
+        if (start.isAfter(end)) throw new StartDateAfterEndException();
+        this.start = start;
+        this.end = end;
+    }
+
+    public LocalDateTime getStart() {
+        return DateUtil.startDay(start);
+    }
+
+    public LocalDateTime getEnd() {
+        return DateUtil.endDay(end);
+    }
+
+    public static ProgressPeriod orDefault(
+            @Nullable LocalDate start,
+            @Nullable LocalDate end
+    ) {
+        if ((start == null) != (end == null)) throw new BothEndsMustBePassedException();
+        return start == null ? ProgressPeriod.month() : new ProgressPeriod(start, end);
+    }
+
 
     public static ProgressPeriod day() {
         return new ProgressPeriod(
-                DateUtil.startDay(),
-                DateUtil.endDay()
+                DateUtil.today(),
+                DateUtil.today()
         );
     }
 
