@@ -17,6 +17,10 @@ spring:
     show-sql: false
 
 app:
+  time:
+    zone: ${TIME_ZONE:Europe/Moscow}
+    time-to-close: ${TIME_TO_CLOSE:0 0 17 * * *}
+
   security:
     jwtSecret: ${JWT_SECRET}
     jwtExpirationMs: ${JWT_EXPIRATION}

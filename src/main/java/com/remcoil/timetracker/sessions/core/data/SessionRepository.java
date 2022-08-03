@@ -18,6 +18,8 @@ public interface SessionRepository extends JpaRepository<SessionEntity, Integer>
 
     List<SessionEntity> findAllByProjectAndEndTimeIsNull(ProjectEntity project);
 
+    List<SessionEntity> findAllByEndTimeIsNull();
+
     @Query(value = "select s from SessionEntity s where s.user.id = ?1 and s.startTime between ?2 and ?3")
     List<SessionEntity> getByPeriodAndUser(UUID userId, LocalDateTime startTime, LocalDateTime endDate);
 

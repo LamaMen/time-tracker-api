@@ -5,6 +5,10 @@ import com.remcoil.timetracker.projects.core.domain.ProjectCrudService;
 import com.remcoil.timetracker.projects.core.exceptions.ProjectArchiveException;
 import com.remcoil.timetracker.sessions.core.exceptions.NoOpenedSessionInProjectException;
 import com.remcoil.timetracker.sessions.core.exceptions.SessionAlreadyOpenException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -12,6 +16,8 @@ import java.util.UUID;
 
 @Component
 public class SessionUseCase {
+
+    private final Logger logger = LoggerFactory.getLogger(SessionUseCase.class.getName());
     private final SessionService sessionService;
     private final ProjectCrudService projectService;
 
@@ -49,5 +55,10 @@ public class SessionUseCase {
         }
 
         sessionService.stopSession(session);
+    }
+
+    @Scheduled(cron = "${app.time.time-to-close}", zone = "${app.time.zone}")
+    public void stopAllAtEndOfWorkingDay() {
+        sessionService.getAllOpened().forEach(sessionService::stopSession);
     }
 }

@@ -31,6 +31,11 @@ public class SessionService {
         return sessionEntities.stream().map(SessionEntity::toSession).collect(Collectors.toList());
     }
 
+    public List<Session> getAllOpened() {
+        List<SessionEntity> sessionEntities = sessionRepository.findAllByEndTimeIsNull();
+        return sessionEntities.stream().map(SessionEntity::toSession).collect(Collectors.toList());
+    }
+
     public List<Session> getByPeriod(@Nullable UUID userId, LocalDateTime start, LocalDateTime end) {
         List<SessionEntity> sessionEntities = userId != null ? sessionRepository.getByPeriodAndUser(userId, start, end) : sessionRepository.getByPeriod(start, end);
 
