@@ -24,16 +24,16 @@ public class ProgressAdminController {
     @GetMapping("/{id}")
     public @ResponseBody Map<LocalDate, List<Progress>> getUserProgress(
             @PathVariable UUID id,
-            @RequestParam(value = "start", required = false) @DateTimeFormat(pattern = "d.MM.yyyy") LocalDate start,
-            @RequestParam(value = "end", required = false) @DateTimeFormat(pattern = "d.MM.yyyy") LocalDate end
+            @RequestParam(value = "start", required = false) @DateTimeFormat(pattern = "yyyy-MM-d") LocalDate start,
+            @RequestParam(value = "end", required = false) @DateTimeFormat(pattern = "yyyy-MM-d") LocalDate end
     ) {
         return progressService.getProgressByUser(id, start, end);
     }
 
     @GetMapping("/general")
     public @ResponseBody List<Progress> getGeneralProgress(
-            @RequestParam(value = "start", required = false) @DateTimeFormat(pattern = "d.MM.yyyy") LocalDate start,
-            @RequestParam(value = "end", required = false) @DateTimeFormat(pattern = "d.MM.yyyy") LocalDate end
+            @RequestParam(value = "start", required = false) @DateTimeFormat(pattern = "yyyy-MM-d") LocalDate start,
+            @RequestParam(value = "end", required = false) @DateTimeFormat(pattern = "yyyy-MM-d") LocalDate end
     ) {
         return progressService.getGeneralProgress(null, start, end);
     }

@@ -33,8 +33,8 @@ public class ProgressUserController {
     @GetMapping()
     public @ResponseBody Map<LocalDate, List<Progress>> getSelfProgress(
             @AuthenticationPrincipal User user,
-            @RequestParam(value = "start", required = false) @DateTimeFormat(pattern = "d.MM.yyyy") LocalDate start,
-            @RequestParam(value = "end", required = false) @DateTimeFormat(pattern = "d.MM.yyyy") LocalDate end
+            @RequestParam(value = "start", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate start,
+            @RequestParam(value = "end", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate end
     ) {
         return progressService.getProgressByUser(user.getId(), start, end);
     }
@@ -42,8 +42,8 @@ public class ProgressUserController {
     @GetMapping("/general")
     public @ResponseBody List<Progress> getGeneralProgress(
             @AuthenticationPrincipal User user,
-            @RequestParam(value = "start", required = false) @DateTimeFormat(pattern = "d.MM.yyyy") LocalDate start,
-            @RequestParam(value = "end", required = false) @DateTimeFormat(pattern = "d.MM.yyyy") LocalDate end
+            @RequestParam(value = "start", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate start,
+            @RequestParam(value = "end", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate end
     ) {
         return progressService.getGeneralProgress(user.getId(), start, end);
     }

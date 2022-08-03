@@ -6,8 +6,8 @@ import java.time.Duration;
 
 @Getter
 public class ProjectDuration {
-    private final Integer hours;
-    private final Integer minutes;
+    private final int hours;
+    private final int minutes;
 
     public ProjectDuration(Duration duration) {
         int hours = (int) duration.toHours();

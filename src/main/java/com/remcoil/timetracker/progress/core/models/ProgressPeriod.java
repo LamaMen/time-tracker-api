@@ -3,7 +3,6 @@ package com.remcoil.timetracker.progress.core.models;
 import com.remcoil.timetracker.core.DateUtil;
 import com.remcoil.timetracker.progress.core.exceptions.BothEndsMustBePassedException;
 import com.remcoil.timetracker.progress.core.exceptions.StartDateAfterEndException;
-import lombok.Getter;
 import org.springframework.lang.Nullable;
 
 import java.time.LocalDate;
@@ -23,8 +22,16 @@ public class ProgressPeriod {
         return DateUtil.startDay(start);
     }
 
+    public LocalDate getStartDay() {
+        return start;
+    }
+
     public LocalDateTime getEnd() {
         return DateUtil.endDay(end);
+    }
+
+    public LocalDate getEndDay() {
+        return end;
     }
 
     public static ProgressPeriod orDefault(

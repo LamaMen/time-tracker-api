@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+@Getter
 @Entity
 @Table(name = "projects", schema = "time_tracker")
-@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ProjectEntity {
     @Id
@@ -32,14 +32,5 @@ public class ProjectEntity {
 
     public Project toProject() {
         return new Project(this.id, this.name, isArchive);
-    }
-
-    public void updateFields(Project project) {
-        this.name = project.getName();
-        this.isArchive = project.isArchive();
-    }
-
-    public void archive() {
-        this.isArchive = true;
     }
 }
