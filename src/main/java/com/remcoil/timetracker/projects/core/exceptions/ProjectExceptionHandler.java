@@ -12,6 +12,7 @@ public class ProjectExceptionHandler {
     @ExceptionHandler(value = {
             ProjectNotFoundException.class,
             ProjectAlreadyArchivedException.class,
+            ProjectArchiveException.class,
     })
     public ResponseEntity<MessageResponse> projectNotFound(@NonNull RuntimeException exception) {
         return ResponseEntity.badRequest().body(new MessageResponse(exception.getMessage()));

@@ -27,7 +27,7 @@ public class ProjectEntity {
     public ProjectEntity(Project project) {
         this.id = project.getId();
         this.name = project.getName();
-        this.isArchive = false;
+        this.isArchive = project.isArchive();
     }
 
     public Project toProject() {

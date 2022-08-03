@@ -20,8 +20,4 @@ public class Session {
     private final LocalDateTime startTime;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private final LocalDateTime endTime;
-
-    public static Session notOpened() {
-        return new Session(-1, null, new Project(-1, null, false), null, null);
-    }
 }

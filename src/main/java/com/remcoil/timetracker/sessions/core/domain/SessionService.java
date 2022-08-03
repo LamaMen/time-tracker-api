@@ -1,10 +1,9 @@
 package com.remcoil.timetracker.sessions.core.domain;
 
 import com.remcoil.timetracker.core.DateUtil;
+import com.remcoil.timetracker.projects.core.data.ProjectEntity;
 import com.remcoil.timetracker.sessions.core.data.SessionEntity;
 import com.remcoil.timetracker.sessions.core.data.SessionRepository;
-import com.remcoil.timetracker.sessions.core.exceptions.NoOpenedSessionInProjectException;
-import com.remcoil.timetracker.sessions.core.exceptions.SessionAlreadyOpenException;
 import com.remcoil.timetracker.users.core.data.UserEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
@@ -23,8 +22,13 @@ public class SessionService {
         this.sessionRepository = sessionRepository;
     }
 
-    public Session getOpened(UUID userId) {
-        return sessionRepository.findByUserAndEndTimeIsNull(new UserEntity(userId)).map(SessionEntity::toSession).orElse(Session.notOpened());
+    public Optional<Session> getOpenedByUser(UUID userId) {
+        return sessionRepository.findByUserAndEndTimeIsNull(new UserEntity(userId)).map(SessionEntity::toSession);
+    }
+
+    public List<Session> getOpenedByProject(int projectId) {
+        List<SessionEntity> sessionEntities = sessionRepository.findAllByProjectAndEndTimeIsNull(new ProjectEntity(projectId));
+        return sessionEntities.stream().map(SessionEntity::toSession).collect(Collectors.toList());
     }
 
     public List<Session> getByPeriod(@Nullable UUID userId, LocalDateTime start, LocalDateTime end) {
@@ -33,36 +37,15 @@ public class SessionService {
         return sessionEntities.stream().map(SessionEntity::toSession).collect(Collectors.toList());
     }
 
-    public void startWork(int projectId, UUID userId) {
+    public void startSession(int projectId, UUID userId) {
         UserEntity user = new UserEntity(userId);
-        Optional<SessionEntity> openedSession = sessionRepository.findByUserAndEndTimeIsNull(user);
-        if (openedSession.isPresent()) {
-            SessionEntity sessionEntity = openedSession.get();
-
-            if (sessionEntity.getProject().getId() == projectId) {
-                throw new SessionAlreadyOpenException(projectId, userId);
-            }
-
-            stopSession(sessionEntity);
-        }
-
         SessionEntity session = new SessionEntity(projectId, user);
         sessionRepository.save(session);
     }
 
-    public void stopWork(int projectId, UUID userId) {
-        UserEntity user = new UserEntity(userId);
-        SessionEntity session = sessionRepository.findByUserAndEndTimeIsNull(user).orElseThrow(() -> new NoOpenedSessionInProjectException(projectId, user.getId()));
-
-        if (session.getProject().getId() != projectId) {
-            throw new NoOpenedSessionInProjectException(projectId, user.getId());
-        }
-
-        stopSession(session);
-    }
-
-    private void stopSession(SessionEntity openedSession) {
-        openedSession.setEndTime(DateUtil.now());
-        sessionRepository.save(openedSession);
+    public void stopSession(Session session) {
+        SessionEntity sessionEntity = new SessionEntity(session);
+        sessionEntity.setEndTime(DateUtil.now());
+        sessionRepository.save(sessionEntity);
     }
 }

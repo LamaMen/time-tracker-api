@@ -36,6 +36,14 @@ public class SessionEntity {
         this.startTime = DateUtil.now();
     }
 
+    public SessionEntity(Session session) {
+        this.id = session.getId();
+        this.user = new UserEntity(session.getUser());
+        this.project = new ProjectEntity(session.getProject());
+        this.startTime = session.getStartTime();
+        this.endTime = session.getEndTime();
+    }
+
     public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }

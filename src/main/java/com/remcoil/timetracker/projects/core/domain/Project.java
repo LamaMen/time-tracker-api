@@ -11,4 +11,8 @@ public class Project {
     private int id;
     private String name;
     private boolean isArchive;
+
+    public void archive() {
+        isArchive = true;
+    }
 }
