@@ -2,6 +2,9 @@ springdoc:
   swagger-ui:
     path: /swagger-ui.html
 
+server:
+  port: ${PORT:8080}
+
 spring:
   datasource:
     url: ${JDBC_DATABASE_URL}
