@@ -51,18 +51,18 @@ public class ProgressUseCase {
         }));
     }
 
-    private List<Continuous> mergeContinuous(List<Session> sessions, List<Amendment> amendments) {
+    private @NonNull List<Continuous> mergeContinuous(List<Session> sessions, List<Amendment> amendments) {
         List<Continuous> items = new ArrayList<>();
         items.addAll(sessions);
         items.addAll(amendments);
         return items;
     }
 
-    private List<Progress> mapDurationsToProgress(Map<Project, ProjectDuration> durations) {
+    private @NonNull List<Progress> mapDurationsToProgress(@NonNull Map<Project, ProjectDuration> durations) {
         return durations.entrySet().stream().map(p -> new Progress(p.getKey(), p.getValue())).collect(Collectors.toList());
     }
 
-    private Map<Project, ProjectDuration> calculateDiff(List<Continuous> sessions) {
+    private @NonNull Map<Project, ProjectDuration> calculateDiff(@NonNull List<Continuous> sessions) {
         return sessions.stream().collect(Collectors.groupingBy(Continuous::getProject, new DurationCollector()));
     }
 }

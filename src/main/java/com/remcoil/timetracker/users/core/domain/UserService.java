@@ -3,6 +3,8 @@ package com.remcoil.timetracker.users.core.domain;
 import com.remcoil.timetracker.users.core.data.UserEntity;
 import com.remcoil.timetracker.users.core.data.UserRepository;
 import com.remcoil.timetracker.users.core.exceptions.UserNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserService {
+    private final Logger logger = LoggerFactory.getLogger("Users");
     private final UserRepository userRepository;
 
     public UserService(UserRepository userRepository) {
@@ -29,6 +32,7 @@ public class UserService {
 
     public User save(@NonNull User user) {
         UserEntity userEntity = userRepository.save(new UserEntity(user));
+        logger.info("User with id: {} created (or updated)", userEntity.getId());
         return userEntity.toUser();
     }
 
@@ -36,5 +40,6 @@ public class UserService {
         if (!userRepository.existsById(id)) throw new UserNotFoundException(id);
 
         userRepository.deleteById(id);
+        logger.info("User with id: {} deleted", id);
     }
 }

@@ -6,6 +6,7 @@ import com.remcoil.timetracker.users.core.data.UserEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -33,7 +34,7 @@ public class AmendmentEntity {
     private int hours;
     private int minutes;
 
-    public AmendmentEntity(Amendment amendment) {
+    public AmendmentEntity(@NonNull Amendment amendment) {
         this.id = amendment.getId();
         this.user = new UserEntity(amendment.getUser());
         this.project = new ProjectEntity(amendment.getProject());

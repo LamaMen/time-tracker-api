@@ -5,6 +5,7 @@ import com.remcoil.timetracker.users.core.data.UserRole;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.lang.NonNull;
 
 import java.util.UUID;
 
@@ -19,7 +20,7 @@ public class FullUser {
     private String password;
     private UserRole role;
 
-    public FullUser(User user) {
+    public FullUser(@NonNull User user) {
         this.id = user.getId();
         this.name = user.getName();
         this.surname = user.getSurname();

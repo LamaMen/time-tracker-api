@@ -1,5 +1,6 @@
 package com.remcoil.timetracker.sessions.core.domain;
 
+import com.remcoil.timetracker.core.DateUtil;
 import com.remcoil.timetracker.projects.core.domain.Project;
 import com.remcoil.timetracker.projects.core.domain.ProjectCrudService;
 import com.remcoil.timetracker.projects.core.exceptions.ProjectArchiveException;
@@ -7,17 +8,17 @@ import com.remcoil.timetracker.sessions.core.exceptions.NoOpenedSessionInProject
 import com.remcoil.timetracker.sessions.core.exceptions.SessionAlreadyOpenException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.lang.NonNull;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @Component
 public class SessionUseCase {
-
-    private final Logger logger = LoggerFactory.getLogger(SessionUseCase.class.getName());
+    private final Logger logger = LoggerFactory.getLogger("Sessions");
     private final SessionService sessionService;
     private final ProjectCrudService projectService;
 
@@ -26,7 +27,7 @@ public class SessionUseCase {
         this.projectService = projectService;
     }
 
-    public void startWork(int projectId, UUID userId) {
+    public void startWork(int projectId, @NonNull UUID userId) {
         Optional<Session> openedSession = sessionService.getOpenedByUser(userId);
 
         if (openedSession.isPresent()) {
@@ -37,6 +38,7 @@ public class SessionUseCase {
             }
 
             sessionService.stopSession(session);
+            logger.info("Session (user: {}, project: {}) stopped ", userId, session.getProject().getId());
         }
 
         Project project = projectService.getById(projectId);
@@ -45,9 +47,10 @@ public class SessionUseCase {
         }
 
         sessionService.startSession(projectId, userId);
+        logger.info("Session (user: {}, project: {}) started ", userId, projectId);
     }
 
-    public void stopWork(int projectId, UUID userId) {
+    public void stopWork(int projectId, @NonNull UUID userId) {
         Session session = sessionService.getOpenedByUser(userId).orElseThrow(() -> new NoOpenedSessionInProjectException(projectId, userId));
 
         if (session.getProject().getId() != projectId) {
@@ -55,10 +58,13 @@ public class SessionUseCase {
         }
 
         sessionService.stopSession(session);
+        logger.info("Session (user: {}, project: {}) stopped ", userId, projectId);
     }
 
     @Scheduled(cron = "${app.time.time-to-close}", zone = "${app.time.zone}")
     public void stopAllAtEndOfWorkingDay() {
-        sessionService.getAllOpened().forEach(sessionService::stopSession);
+        List<Session> sessions = sessionService.getAllOpened();
+        sessions.forEach(sessionService::stopSession);
+        logger.info("Opened sessions ({}) stopped at {}", sessions.size(), DateUtil.now());
     }
 }

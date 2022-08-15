@@ -5,6 +5,7 @@ import com.remcoil.timetracker.projects.core.domain.Project;
 import com.remcoil.timetracker.projects.core.domain.ProjectCrudService;
 import com.remcoil.timetracker.users.core.domain.User;
 import com.remcoil.timetracker.users.core.domain.UserService;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -19,7 +20,7 @@ public class AmendmentUseCase {
         this.amendmentService = amendmentService;
     }
 
-    public void add(AmendmentData amendmentData) {
+    public void add(@NonNull AmendmentData amendmentData) {
         Project project = projectService.getById(amendmentData.getProjectId());
         User user = userService.getById(amendmentData.getUserId());
         Amendment amendment = amendmentData.toAmendment(user, project);

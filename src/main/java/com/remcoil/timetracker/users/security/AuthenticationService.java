@@ -2,6 +2,7 @@ package com.remcoil.timetracker.users.security;
 
 import com.remcoil.timetracker.users.core.domain.User;
 import com.remcoil.timetracker.users.core.domain.UserService;
+import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -33,7 +34,7 @@ public class AuthenticationService {
         return new Jwt(token);
     }
 
-    public Jwt registerUser(User user) {
+    public Jwt registerUser(@NonNull User user) {
         User savedUser = userService.save(user);
         String token = jwtUtils.generateJwtToken(savedUser);
         return new Jwt(token);

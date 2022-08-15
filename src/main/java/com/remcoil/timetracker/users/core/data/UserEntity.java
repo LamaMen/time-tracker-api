@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
+import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
 import java.util.UUID;
@@ -26,7 +27,7 @@ public class UserEntity {
     @Enumerated(EnumType.STRING)
     UserRole role;
 
-    public UserEntity(User user) {
+    public UserEntity(@NonNull User user) {
         this.id = user.getId();
         this.name = user.getName();
         this.surname = user.getSurname();
@@ -34,7 +35,7 @@ public class UserEntity {
         this.role = user.getRole();
     }
 
-    public UserEntity(UUID id) {
+    public UserEntity(@NonNull UUID id) {
         this.id = id;
     }
 

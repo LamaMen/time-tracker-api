@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -34,13 +35,13 @@ public class SessionEntity {
     @Column(name = "end_date")
     private LocalDateTime endTime;
 
-    public SessionEntity(int projectId, UserEntity user) {
+    public SessionEntity(int projectId, @NonNull UserEntity user) {
         this.user = user;
         this.project = new ProjectEntity(projectId);
         this.startTime = DateUtil.now();
     }
 
-    public SessionEntity(Session session) {
+    public SessionEntity(@NonNull Session session) {
         this.id = session.getId();
         this.user = new UserEntity(session.getUser());
         this.project = new ProjectEntity(session.getProject());

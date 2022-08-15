@@ -5,6 +5,7 @@ import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -18,7 +19,7 @@ public class JwtUtils {
     @Value("${app.security.jwtExpirationMs}")
     private int jwtExpirationMs;
 
-    public String generateJwtToken(User user) {
+    public String generateJwtToken(@NonNull User user) {
         Date now = new Date();
 
         return Jwts.builder()

@@ -3,6 +3,7 @@ package com.remcoil.timetracker.projects.core.domain;
 import com.remcoil.timetracker.projects.core.data.ProjectEntity;
 import com.remcoil.timetracker.projects.core.data.ProjectRepository;
 import com.remcoil.timetracker.projects.core.exceptions.ProjectNotFoundException;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,12 +27,12 @@ public class ProjectCrudService {
         return projectEntities.stream().map(ProjectEntity::toProject).collect(Collectors.toList());
     }
 
-    public Project save(Project project) {
+    public Project save(@NonNull Project project) {
         ProjectEntity projectEntity = projectRepository.save(new ProjectEntity(project));
         return projectEntity.toProject();
     }
 
-    public Project update(Project project) {
+    public Project update(@NonNull Project project) {
         if (!projectRepository.existsById(project.getId())) {
             throw new ProjectNotFoundException(project.getId());
         }
@@ -40,7 +41,7 @@ public class ProjectCrudService {
         return projectRepository.save(projectEntity).toProject();
     }
 
-    public void delete(Project project) {
+    public void delete(@NonNull Project project) {
         projectRepository.deleteById(project.getId());
     }
 }

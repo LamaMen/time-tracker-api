@@ -4,6 +4,7 @@ import com.remcoil.timetracker.projects.core.domain.Project;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
 
@@ -24,7 +25,7 @@ public class ProjectEntity {
         this.isArchive = false;
     }
 
-    public ProjectEntity(Project project) {
+    public ProjectEntity(@NonNull Project project) {
         this.id = project.getId();
         this.name = project.getName();
         this.isArchive = project.isArchive();
