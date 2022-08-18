@@ -1,10 +1,8 @@
 job("Build and push Docker") {
     startOn {
         gitPush {
-            enabled = true
-            repository = "time-tracker-api"
             branchFilter {
-                +"refs/heads/release"
+                +Regex("release")
             }
         }
     }
@@ -29,7 +27,7 @@ job("Build and push Docker") {
         }
 
         push("pampero.registry.jetbrains.space/p/time-tracker/services/main") {
-            tags("0.1.0+\$JB_SPACE_EXECUTION_NUMBER", "latest")
+            tags("0.1.\$JB_SPACE_EXECUTION_NUMBER", "latest")
         }
     }
 }
