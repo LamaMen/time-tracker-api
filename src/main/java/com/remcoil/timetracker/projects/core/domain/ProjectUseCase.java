@@ -11,7 +11,7 @@ import java.util.List;
 
 @Component
 public class ProjectUseCase {
-    private final Logger logger = LoggerFactory.getLogger("Projects");
+    private static final Logger logger = LoggerFactory.getLogger(ProjectUseCase.class);
     private final ProjectCrudService projectService;
     private final SessionService sessionService;
 

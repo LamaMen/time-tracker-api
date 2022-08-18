@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserService {
-    private final Logger logger = LoggerFactory.getLogger("Users");
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
     private final UserRepository userRepository;
 
     public UserService(UserRepository userRepository) {

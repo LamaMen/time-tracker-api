@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class AmendmentService {
-    private final Logger logger = LoggerFactory.getLogger("Amendments");
+    private static final Logger logger = LoggerFactory.getLogger(AmendmentService.class);
     private final AmendmentRepository amendmentRepository;
 
     public AmendmentService(AmendmentRepository amendmentRepository) {

@@ -8,13 +8,14 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @OpenAPIDefinition(
         info = @Info(
-                version = "0.0.4",
+                version = "0.1.0",
                 title = "Time tracker",
                 description = "System for tracking the time of work on the project for RemCoil employees."
         ),
         servers = {
                 @Server(url = "http://localhost:8080", description = "Test server"),
                 @Server(url = "https://time-tracker-develop.herokuapp.com", description = "Dev server"),
+                @Server(url = "https://api.tracker.remcoil.space", description = "Prod server"),
         }
 )
 public class SwaggerConfig {

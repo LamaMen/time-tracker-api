@@ -1,0 +1,51 @@
+version: "3.6"
+
+services:
+  main:
+    container_name: main
+    image: pampero.registry.jetbrains.space/p/time-tracker/services/main:latest
+    labels:
+      - "traefik.http.routers.time-tracker.rule=Host(`api.tracker.remcoil.space`)"
+      - "traefik.http.routers.time-tracker.tls.certresolver=leresolver"
+      - "traefik.http.routers.time-tracker.entrypoints=websecure"
+      - "traefik.http.services.time-tracker.loadbalancer.server.port=${PORT}"
+      - "traefik.http.routers.time-tracker.service=time-tracker"
+    networks:
+      - time-tracker
+      - traefic
+    environment:
+      PORT: ${PORT}
+      JDBC_DATABASE_URL: ${POSTGRES_URL}
+      JDBC_DATABASE_PASSWORD: ${POSTGRES_PASSWORD}
+      JDBC_DATABASE_USERNAME: ${POSTGRES_USER}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRATION: ${JWT_EXPIRATION}
+    depends_on:
+      - database
+
+  database:
+    image: postgres:11
+    container_name: popper_database
+    labels:
+      - "traefik.enable=false"
+    networks:
+      - time-tracker
+    volumes:
+      - database_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB_NAME}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+
+volumes:
+  database_data:
+
+networks:
+  time-tracker:
+    name: time-tracker
+    driver: bridge
+  traefic:
+    name: traefic
+    external: true

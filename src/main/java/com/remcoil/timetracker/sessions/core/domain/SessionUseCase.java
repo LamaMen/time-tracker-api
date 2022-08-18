@@ -18,7 +18,7 @@ import java.util.UUID;
 
 @Component
 public class SessionUseCase {
-    private final Logger logger = LoggerFactory.getLogger("Sessions");
+    private static final Logger logger = LoggerFactory.getLogger(SessionUseCase.class);
     private final SessionService sessionService;
     private final ProjectCrudService projectService;
 
